@@ -63,5 +63,14 @@ public class App {
                 history.getGivenBook()
                 );
         
+        c = new GregorianCalendar();
+        history.setReturnBook(c.getTime());
+        System.out.printf("Читатель %s %S взял читать книгу \"%s\", %s%n",
+                history.getUser().getFirstname(),
+                history.getUser().getLastname(),
+                history.getBook().getBookName(),
+                history.getReturnBook()
+                );
+        
     }
 }
