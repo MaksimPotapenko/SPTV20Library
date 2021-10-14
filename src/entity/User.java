@@ -40,6 +40,11 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    @Override
+    public String toString() {
+        return "User{" + "firstname=" + firstname + ", lastname=" + lastname + ", phone=" + phone + '}';
+    }
     
     
 }
