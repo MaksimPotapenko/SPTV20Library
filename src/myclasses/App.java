@@ -10,9 +10,11 @@ import entity.Author;
 import entity.Book;
 import entity.History;
 import entity.User;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -21,9 +23,9 @@ import java.util.Scanner;
  */
 public class App {
     private Scanner scanner = new Scanner(System.in);
-    private Book[] books = new Book[10];
-    private User[] users = new User[10];
-    private History[] histories = new History[10];
+    private List<Book> books = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
+    private List<History> histories = new ArrayList<>();
     public void run() {
         String repeat = "yes";
         do{
@@ -73,7 +75,7 @@ public class App {
                     break;
                 case 7:
                     System.out.println(" ");
-                    System.out.println("Список выданных книг");
+                    System.out.println("Список выданных книг: ");
                     printListGivenBooks();
                     break;
                     
@@ -85,18 +87,20 @@ public class App {
         System.out.println(" ");
         System.out.println("Пока!");
         
+        
+        
     }
     private boolean printListGivenBooks() {
         System.out.println(" ");
         System.out.println("Список выданных книг");
         int n = 0;
-        for (int i = 0; i < histories.length; i++) {
-            if(histories[i] != null && histories[i].getReturnBook() == null) {
+        for (int i = 0; i < histories.size(); i++) {
+            if(histories.get(i) != null && histories.get(i).getReturnBook() == null) {
                 System.out.printf("%d. Книгу \"%s\" читает %s %s%n"
                         ,i+i
-                        ,histories[i].getBook().getBookName()
-                        ,histories[i].getUser().getFirstname()
-                        ,histories[i].getUser().getLastname()
+                        ,histories.get(i).getBook().getBookName()
+                        ,histories.get(i).getUser().getFirstname()
+                        ,histories.get(i).getUser().getLastname()
                 );
                 n++;
             }
@@ -119,12 +123,7 @@ public class App {
                     System.out.println("Введите телефон читателя: ");
                     user.setPhone(scanner.nextLine());
                     System.out.println("Читатель инициализирован: "+user.toString());
-                    for (int i = 0; i < users.length; i++) {
-                        if (users[i] == null) {
-                            users[i] = user;
-                        }
-                        break;
-                    }
+                    users.add(user);
     }
 
     private void AddBook() {
@@ -146,12 +145,7 @@ public class App {
                         authors[i] = author;
                     }
                     book.setAuthors(authors);
-                    for (int i = 0; i < books.length; i++) {
-                        if(books[i] == null) {
-                            books[i] = book;
-                            break;
-                        }
-                    }
+                    books.add(book);
                     
                     
                     System.out.println("Введите год издания книги: ");
@@ -160,13 +154,13 @@ public class App {
     }
 
     private void BookList() {
-        for (int i = 0; i < books.length; i++) {
-                        if(books[i] != null) {
+        for (int i = 0; i < books.size(); i++) {
+                        if(books.get(i) != null) {
                             System.out.printf("%n. %s. %s %s. %d%n"
                                 ,i+1
-                                ,books[i].getBookName()
-                                ,Arrays.toString(books[i].getAuthors())
-                                ,books[i].getReleaseYear()
+                                ,books.get(i).getBookName()
+                                ,Arrays.toString(books.get(i).getAuthors())
+                                ,books.get(i).getReleaseYear()
                             );  
                         }
                     }
@@ -174,13 +168,13 @@ public class App {
 
     private void GivenBook() {
         System.out.println("Список книг: ");
-                   for (int i = 0; i < books.length; i++) {
-                      if(books[i] != null){
+                   for (int i = 0; i < books.size(); i++) {
+                      if(books.get(i) != null){
                            System.out.printf("%d. %s. %s. %d.%n"
                                    ,i+1
-                                   ,books[i].getBookName()
-                                   ,Arrays.toString(books[i].getAuthors())
-                                   ,books[i].getReleaseYear()
+                                   ,books.get(i).getBookName()
+                                   ,Arrays.toString(books.get(i).getAuthors())
+                                   ,books.get(i).getReleaseYear()
                            );
                       }
                    }
@@ -188,13 +182,13 @@ public class App {
                    int numberBook = scanner.nextInt(); scanner.nextLine();
                    
                    System.out.println("Список читателей: ");
-                   for (int i = 0; i < users.length; i++) {
-                      if(users[i] != null){
+                   for (int i = 0; i < users.size(); i++) {
+                      if(users.get(i) != null){
                            System.out.printf("%d. ИМЯ:  %s; ФАМИЛИЯ:  %s; ТЕЛЕФОН: %s.%n"
                                    ,i+1
-                                   ,users[i].getFirstname()
-                                   ,users[i].getLastname()
-                                   ,users[i].getPhone()
+                                   ,users.get(i).getFirstname()
+                                   ,users.get(i).getLastname()
+                                   ,users.get(i).getPhone()
                            );
                       }
                    }
@@ -202,46 +196,41 @@ public class App {
                    int numberReader = scanner.nextInt(); scanner.nextLine();
                    
                    History history = new History();
-                   history.setBook(books[numberBook - 1]);
-                   history.setUser(users[numberReader - 1]);
+                   history.setBook(books.get(numberBook - 1));
+                   history.setUser(users.get(numberReader - 1));
                    Calendar c = new GregorianCalendar();
                    history.setGivenBook(c.getTime());
-                   for (int i = 0; i < histories.length; i++) {
-                       if(histories[i] == null){
-                           histories[i] = history;
-                           break;
-                       }
-                   }
+                   histories.add(history);
                    System.out.println("--------------------");
     }
 
     private void ReturnBook() {
         System.out.println("Список выданных книг");
                     
-                    for (int i = 0; i < histories.length; i++) {
-                        if(histories[i] != null && histories[i].getReturnBook() == null) {
+                    for (int i = 0; i < histories.size(); i++) {
+                        if(histories.get(i) != null && histories.get(i).getReturnBook() == null) {
                             System.out.printf("%d. Книгу \"%s\" читает %s %s%n"
                                     ,i+i
-                                    ,histories[i].getBook().getBookName()
-                                    ,histories[i].getUser().getFirstname()
-                                    ,histories[i].getUser().getLastname()
+                                    ,histories.get(i).getBook().getBookName()
+                                    ,histories.get(i).getUser().getFirstname()
+                                    ,histories.get(i).getUser().getLastname()
                             );
                         }
                     }
                     System.out.print("Выберите номер возвращаемой книги: ");
                     int numberHistory = scanner.nextInt(); scanner.nextLine();
                     Calendar c = new GregorianCalendar();
-                    histories[numberHistory - 1].setReturnBook(c.getTime());
+                    histories.get(numberHistory - 1).setReturnBook(c.getTime());
     }
 
     private void UsersList() {
-        for (int i = 0; i < users.length; i++) {
-                        if(users[i] != null){
+        for (int i = 0; i < users.size(); i++) {
+                        if(users.get(i) != null){
                             System.out.printf("%d. ИМЯ:  %s; ФАМИЛИЯ:  %s; ТЕЛЕФОН: %s.%n"
                                     ,i+1
-                                    ,users[i].getFirstname()
-                                    ,users[i].getLastname()
-                                    ,users[i].getPhone()
+                                    ,users.get(i).getFirstname()
+                                    ,users.get(i).getLastname()
+                                    ,users.get(i).getPhone()
                             );
                         }    
                     }
