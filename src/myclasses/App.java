@@ -31,6 +31,8 @@ public class App {
     
     public App(){
         books = saverToFiles.loadBooks();
+        users = saverToFiles.loadUsers();
+        histories = saverToFiles.loadHistories();
     }
     
     public void run() {
@@ -131,6 +133,7 @@ public class App {
                     user.setPhone(scanner.nextLine());
                     System.out.println("Читатель инициализирован: "+user.toString());
                     users.add(user);
+                    saverToFiles.saveUsers(users);
     }
 
     private void AddBook() {
@@ -207,6 +210,7 @@ public class App {
                    Calendar c = new GregorianCalendar();
                    history.setGivenBook(c.getTime());
                    histories.add(history);
+                   saverToFiles.saveHistories(histories);
                    System.out.println("--------------------");
     }
 
@@ -227,6 +231,7 @@ public class App {
                     int numberHistory = scanner.nextInt(); scanner.nextLine();
                     Calendar c = new GregorianCalendar();
                     histories.get(numberHistory - 1).setReturnBook(c.getTime());
+                    saverToFiles.saveHistories(histories);
     }
 
     private void UsersList() {
