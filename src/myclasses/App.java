@@ -104,7 +104,13 @@ public class App {
         System.out.println("Список выданных книг");
         int n = 0;
         for (int i = 0; i < histories.size(); i++) {
-            if(histories.get(i) != null && histories.get(i).getReturnBook() == null) {
+            if(histories.get(i) != null 
+                               && histories.get(i).getReturnBook() == null
+                               && (
+                                     histories.get(i).getBook().getCount() 
+                                    < histories.get(i).getBook().getQuantity()+1
+                                  )
+                               ){
                 System.out.printf("%d. Книгу \"%s\" читает %s %s%n"
                         ,i+i
                         ,histories.get(i).getBook().getBookName()
@@ -139,14 +145,20 @@ public class App {
     private void AddBook() {
         System.out.println(" ");
                     Book book = new Book();
-                    System.out.println("Введите название книги: ");
+                    System.out.print("Введите название книги: ");
                     book.setBookName(scanner.nextLine());
-                    System.out.println("Введите количество авторов книги: ");
-                    int countAuthors = (scanner.nextInt());scanner.nextLine();
-                    Author[] authors = new Author[countAuthors];
-                    for (int i = 0; i < countAuthors; i++) {
+                    System.out.print("Введите год публикации книги: ");
+                    book.setReleaseYear(scanner.nextInt()); scanner.nextLine();
+                    System.out.print("Введите количество экземпляров книги: ");
+                    book.setQuantity(scanner.nextInt()); scanner.nextLine();
+                    book.setCount(book.getQuantity());
+                    System.out.println("Автор книги: ");
+                    System.out.print("Введите количество авторов: ");
+                    int countAutors = scanner.nextInt(); scanner.nextLine();
+                    Author[] authors = new Author[countAutors];
+                    for (int i = 0; i < authors.length; i++) {
                         Author author = new Author();
-                        System.out.print("Введите имя автора: " +(i+1)+": " );
+                        System.out.print("Введите имя автора "+(i+1)+": ");
                         author.setFirstName(scanner.nextLine());
                         System.out.print("Введите фамилию автора: ");
                         author.setLastName(scanner.nextLine());
@@ -164,7 +176,9 @@ public class App {
 
     private void BookList() {
         for (int i = 0; i < books.size(); i++) {
-                        if(books.get(i) != null) {
+                        if(books.get(i) != null 
+                    && books.get(i).getCount() > 0
+                    && books.get(i).getCount() < books.get(i).getQuantity() + 1){
                             System.out.printf("%n. %s. %s %s. %d%n"
                                 ,i+1
                                 ,books.get(i).getBookName()
@@ -177,16 +191,22 @@ public class App {
 
     private void GivenBook() {
         System.out.println("Список книг: ");
+                    int n = 0;
                    for (int i = 0; i < books.size(); i++) {
-                      if(books.get(i) != null){
+                       if(books.get(i) != null && books.get(i).getCount() > 0){
                            System.out.printf("%d. %s. %s. %d.%n"
                                    ,i+1
                                    ,books.get(i).getBookName()
                                    ,Arrays.toString(books.get(i).getAuthors())
                                    ,books.get(i).getReleaseYear()
                            );
+                           n++;
                       }
                    }
+                   if(n < 1){
+                   System.out.println("Нет книг для чтения");
+                   return;
+       }
                    System.out.println("Выберите номер книги: ");
                    int numberBook = scanner.nextInt(); scanner.nextLine();
                    
@@ -210,6 +230,8 @@ public class App {
                    Calendar c = new GregorianCalendar();
                    history.setGivenBook(c.getTime());
                    histories.add(history);
+                   history.getBook().setCount(history.getBook().getCount() - 1);
+                   saverToFiles.saveBooks(books);
                    saverToFiles.saveHistories(histories);
                    System.out.println("--------------------");
     }
@@ -231,6 +253,11 @@ public class App {
                     int numberHistory = scanner.nextInt(); scanner.nextLine();
                     Calendar c = new GregorianCalendar();
                     histories.get(numberHistory - 1).setReturnBook(c.getTime());
+                    histories.get(numberHistory - 1).getBook().setCount(
+                    histories.get(numberHistory - 1)
+                             .getBook()
+                             .getCount() + 1
+                    );
                     saverToFiles.saveHistories(histories);
     }
 
