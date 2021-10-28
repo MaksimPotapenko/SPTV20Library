@@ -176,64 +176,64 @@ public class App {
 
     private void BookList() {
         for (int i = 0; i < books.size(); i++) {
-                        if(books.get(i) != null 
+            if(books.get(i) != null 
                     && books.get(i).getCount() > 0
                     && books.get(i).getCount() < books.get(i).getQuantity() + 1){
-                            System.out.printf("%n. %s. %s %s. %d%n"
+                System.out.printf("%n. %s. %s %s. %d%n"
                                 ,i+1
                                 ,books.get(i).getBookName()
                                 ,Arrays.toString(books.get(i).getAuthors())
                                 ,books.get(i).getReleaseYear()
-                            );  
-                        }
-                    }
+                );  
+            }
+        }
     }
 
     private void GivenBook() {
         System.out.println("Список книг: ");
                     int n = 0;
-                   for (int i = 0; i < books.size(); i++) {
-                       if(books.get(i) != null && books.get(i).getCount() > 0){
-                           System.out.printf("%d. %s. %s. %d.%n"
-                                   ,i+1
-                                   ,books.get(i).getBookName()
-                                   ,Arrays.toString(books.get(i).getAuthors())
-                                   ,books.get(i).getReleaseYear()
-                           );
-                           n++;
-                      }
-                   }
-                   if(n < 1){
-                   System.out.println("Нет книг для чтения");
-                   return;
-       }
-                   System.out.println("Выберите номер книги: ");
-                   int numberBook = scanner.nextInt(); scanner.nextLine();
-                   
-                   System.out.println("Список читателей: ");
-                   for (int i = 0; i < users.size(); i++) {
-                      if(users.get(i) != null){
-                           System.out.printf("%d. ИМЯ:  %s; ФАМИЛИЯ:  %s; ТЕЛЕФОН: %s.%n"
-                                   ,i+1
-                                   ,users.get(i).getFirstname()
-                                   ,users.get(i).getLastname()
-                                   ,users.get(i).getPhone()
-                           );
-                      }
-                   }
-                   System.out.println("Выберите номер читателя: ");
-                   int numberReader = scanner.nextInt(); scanner.nextLine();
-                   
-                   History history = new History();
-                   history.setBook(books.get(numberBook - 1));
-                   history.setUser(users.get(numberReader - 1));
-                   Calendar c = new GregorianCalendar();
-                   history.setGivenBook(c.getTime());
-                   histories.add(history);
-                   history.getBook().setCount(history.getBook().getCount() - 1);
-                   saverToFiles.saveBooks(books);
-                   saverToFiles.saveHistories(histories);
-                   System.out.println("--------------------");
+                    for (int i = 0; i < books.size(); i++) {
+                        if(books.get(i) != null && books.get(i).getCount() > 0){
+                            System.out.printf("%d. %s. %s. %d.%n"
+                                    ,i+1
+                                    ,books.get(i).getBookName()
+                                    ,Arrays.toString(books.get(i).getAuthors())
+                                    ,books.get(i).getReleaseYear()
+                            );
+                            n++;
+                       }
+                    }
+                    if(n < 1){
+                    System.out.println("Нет книг для чтения");
+                    return;
+        }
+                    System.out.println("Выберите номер книги: ");
+                    int numberBook = scanner.nextInt(); scanner.nextLine();
+
+                    System.out.println("Список читателей: ");
+                    for (int i = 0; i < users.size(); i++) {
+                       if(users.get(i) != null){
+                            System.out.printf("%d. ИМЯ:  %s; ФАМИЛИЯ:  %s; ТЕЛЕФОН: %s.%n"
+                                    ,i+1
+                                    ,users.get(i).getFirstname()
+                                    ,users.get(i).getLastname()
+                                    ,users.get(i).getPhone()
+                            );
+                       }
+                    }
+                    System.out.println("Выберите номер читателя: ");
+                    int numberReader = scanner.nextInt(); scanner.nextLine();
+
+                    History history = new History();
+                    history.setBook(books.get(numberBook - 1));
+                    history.setUser(users.get(numberReader - 1));
+                    Calendar c = new GregorianCalendar();
+                    history.setGivenBook(c.getTime());
+                    histories.add(history);
+                    history.getBook().setCount(history.getBook().getCount() - 1);
+                    saverToFiles.saveBooks(books);
+                    saverToFiles.saveHistories(histories);
+                    System.out.println("--------------------");
     }
 
     private void ReturnBook() {
