@@ -5,10 +5,16 @@
  */
 package facade;
 
+import entity.Author;
+
 /**
  *
  * @author user
  */
-public class AuthorFacade {
-    
+public class AuthorFacade extends AbstractFacade<Author>{
+
+    public AuthorFacade(Class<Author> entityClass) {
+        super(entityClass);
+    }
+
 }

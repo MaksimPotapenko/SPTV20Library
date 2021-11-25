@@ -5,10 +5,16 @@
  */
 package facade;
 
+import entity.History;
+
 /**
  *
  * @author user
  */
-public class HistoryFacade {
-    
+public class HistoryFacade extends AbstractFacade<History>{
+
+    public HistoryFacade(Class<History> entityClass) {
+        super(entityClass);
+    }
+
 }
