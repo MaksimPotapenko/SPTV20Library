@@ -304,7 +304,6 @@ public class App {
     }
 
     private void ReturnBook() {
-        System.out.println("Вернуть книгу");
         Set<Integer> setNumbersHistories = printListGivenBooks();
         if(setNumbersHistories.isEmpty()){
             System.out.println("Нет выданных книг.");
@@ -368,7 +367,6 @@ public class App {
     }
     
     private Set<Integer> printListAuthors() {
-        System.out.println("----- Список авторов -----");
         Set<Integer> setNumbersAuthors = new HashSet<>();
         List<Author> authors = authorFacade.findAll();
         for (int i = 0; i < authors.size(); i++) {
