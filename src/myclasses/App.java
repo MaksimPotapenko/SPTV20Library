@@ -78,6 +78,9 @@ public class App {
             System.out.println("7 - список выданных книг");
             System.out.println("8 - список авторов");
             System.out.println("9 - добавить автора");
+            System.out.println("10 - поменять книгу");
+            System.out.println("11 - поменять читателя");
+            System.out.println("12 - поменять автора");
             int task = scanner.nextInt(); scanner.nextLine();
             switch (task) {
                 case 0:
@@ -127,6 +130,24 @@ public class App {
                     System.out.println(" ");
                     System.out.println("Добавить автора: ");
                     addAuthor();
+                    break;
+                    
+                case 10:
+                    System.out.println(" ");
+                    System.out.println("Поменять книгу: ");
+                    changeBook();
+                    break;
+                    
+                case 11:
+                    System.out.println(" ");
+                    System.out.println("Поменять читателя: ");
+                    changeUser();
+                    break;
+                    
+                case 12:
+                    System.out.println(" ");
+                    System.out.println("Поменять автора: ");
+                    changeAuthor();
                     break;
                     
                 default:
@@ -436,7 +457,7 @@ public class App {
         bookFacade.edit(book);
     }
 
-    private void changeReader() {
+    private void changeUser() {
         Set<Integer> changeNumber = new HashSet<>();
         changeNumber.add(1);
         changeNumber.add(2);
